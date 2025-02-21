@@ -6,4 +6,5 @@ app.use(cors());
 app.use(express.json());
 
 require("./src1/index")(app);
+app.use(express.static('public'));
 app.listen(3333);
