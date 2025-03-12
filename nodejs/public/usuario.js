@@ -1,3 +1,12 @@
+const modalCadastro = new bootstrap.Modal(document.getElementById('modalCadastro'));
+
+function novo() {
+    document.getElementById("nome").value = "";
+    document.getElementById("telefone").value = "";
+    document.getElementById("nome").value = "";
+    modalCadastro.show()
+}
+
 function listar(){
     const lista = document.getElementById("lista");
     lista.innerHTML = "<tr><td colspan='5'>Carregando...</td></tr>";
