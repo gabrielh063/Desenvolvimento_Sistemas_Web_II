@@ -20,9 +20,10 @@ exports.post = async (req, res, next) => {
     res.status(201).send("ok");
 }
 exports.put = async (req, res, next) => {
+    let id = req.params.id;
     const conn = await connect();
     const sql = "UPDATE usuario " + "SET nome = ?, telefone = ?, email = ?, senha = ? " + "WHERE idusuario = ?" ;
-    const values = [req.body.nome, req.body.telefone, req.body.email, req.body.senha];
+    const values = [req.body.nome, req.body.telefone, req.body.email, req.body.senha, id];
     await conn.query(sql, values);
     res.status(201).send("ok");
 }
