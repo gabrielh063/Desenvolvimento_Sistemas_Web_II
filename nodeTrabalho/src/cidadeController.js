@@ -15,7 +15,7 @@ async function connect() {
 exports.post = async (req, res, next) => {
     const conn = await connect();
     const sql = "INSERT INTO cidades " + "(nomeCidade, uf, populacao, anoFundacao) " + "VALUES (?,?,?,?)";
-    const values = [req.body.nome, req.body.telefone, req.body.email, req.body.senha];
+    const values = [req.body.nomeCidade, req.body.uf, req.body.populacao, req.body.anoFundacao];
     await conn.query(sql, values);
     res.status(201).send("ok");
 }
@@ -23,7 +23,7 @@ exports.put = async (req, res, next) => {
     let id = req.params.id;
     const conn = await connect();
     const sql = "UPDATE cidades " + "SET nomeCidade = ?, uf = ?, populacao = ?, anoFundacao = ? " + "WHERE idCidade = ?" ;
-    const values = [req.body.nome, req.body.telefone, req.body.email, req.body.senha, id];
+    const values = [req.body.nomeCidade, req.body.uf, req.body.populacao, req.body.anoFundacao, id];
     await conn.query(sql, values);
     res.status(201).send("ok");
 }
@@ -43,7 +43,7 @@ exports.get = async (req, res, next) => {
 exports.getById = async (req, res, next) => {
     let id = req.params.id;
     const conn = await connect();
-    const sql = ("SELECT * FROM cidades WHERE idCidades = ?");
+    const sql = ("SELECT * FROM cidades WHERE idCidade = ?");
     const values = [id];
     let [row] = await conn.query(sql, values); 
     if(row.length == 0){

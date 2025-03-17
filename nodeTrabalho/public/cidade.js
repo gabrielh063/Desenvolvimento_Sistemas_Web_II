@@ -20,13 +20,13 @@ function salvar(){
     let url;
     let metodo;
     if (idCidadeAtual > 0){
-        url = "http://127.0.0.1:3333/cidade/"+idUsuarioAtual;
+        url = "http://127.0.0.1:3333/cidade/"+idCidadeAtual;
         metodo = "PUT";
     } else { 
         url = "http://127.0.0.1:3333/cidade";
         metodo = "POST";
     }
-    fetch(url, {method: metodo, body: JSON.stringify(usuario), headers: {"Content-Type" : "application/json"}}).then(function (){ listar(); modalCadastro.hide()})
+    fetch(url, {method: metodo, body: JSON.stringify(cidade), headers: {"Content-Type" : "application/json"}}).then(function (){ listar(); modalCadastro.hide()})
 }
 
 function listar(){
