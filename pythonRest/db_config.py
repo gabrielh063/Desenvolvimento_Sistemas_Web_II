@@ -2,12 +2,12 @@ import pymysql
 
 DB_HOST = '54.91.193.137'
 DB_USER = 'libertas'
-DB_PASSWORD = '123456'
 DB_NAME = 'libertas5per'
+DB_PASSWORD = '123456'
 def connect_db():
     return pymysql.connect(host=DB_HOST,
-                           user=DB_NAME,
+                           user=DB_USER,
                            password=DB_PASSWORD,
-                           databse=DB_NAME)
+                           database=DB_NAME)
 
                            

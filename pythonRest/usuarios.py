@@ -21,3 +21,19 @@ def usuario():
         cur.close()
         conn.close()
 
+@usuario_bp.route("/usuario/<id>")
+def usuarioById(id):
+    try:
+        conn = connect_db()
+        cur = conn.cursor(pymysql.cursors.DictCursor)
+        cur.execute("SELECT * FROM usuario WHERE idusuario = %s", (id))
+        rows = cur.fetchall()
+        resp = jsonify(rows[0])
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+    finally:
+        cur.close()
+        conn.close()
+
