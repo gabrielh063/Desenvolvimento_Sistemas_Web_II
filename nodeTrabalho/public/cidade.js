@@ -33,7 +33,7 @@ function listar(){
     const lista = document.getElementById("lista");
     lista.innerHTML = "<tr><td colspan='5'>Carregando...</td></tr>";
     
-    fetch("http://127.0.0.1:3333/cidade").then(resp => resp.json()).then(dados => mostrar(dados));
+    fetch("http://127.0.0.1:3333/").then(resp => resp.json()).then(dados => mostrar(dados));
 }
 function mostrar(dados){
     const lista = document.getElementById("lista");
