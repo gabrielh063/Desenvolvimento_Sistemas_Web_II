@@ -7,5 +7,5 @@ app.use(express.json());
 
 require("./src/index")(app);
 app.use(express.static('public'));
-app.listen();
+app.listen(3333);
 

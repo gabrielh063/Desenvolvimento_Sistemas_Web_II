@@ -4,19 +4,14 @@ from db_config import connect_db
 from flask import jsonify
 from flask import flash, request, Blueprint, current_app
 import jwt
+from funcoes import valida_token
 
-usuario_bp = Blueprint("/usuario", __name__)
+usuario_bp = Blueprint("/usuario_bp", __name__)
 
-@usuario_bp.route("/usuario")
+@usuario_bp.route("/usuarios")
 def usuario():
-    try:
-        token = request.headers.get("Authorization")
-        if not token or not token.startswith("Bearer "):
-            return {"success": False}, 401
-        
-        dados = jwt.decode(token.split(" ")[1], current_app.config.get("SECRET_KEY"), algorithms=["HS256"])
-    except:
-        return {"success": False}, 401
+    if not valida_token(request.headers.get('Authorization')):
+        return {"success": False},401
     try:
         conn = connect_db()
         cur = conn.cursor(pymysql.cursors.DictCursor)
@@ -33,6 +28,8 @@ def usuario():
 
 @usuario_bp.route("/usuario/<id>")
 def usuarioById(id):
+    if not valida_token(request.headers.get('Authorization')):
+        return {"success": False},401
     try:
         conn = connect_db()
         cur = conn.cursor(pymysql.cursors.DictCursor)
@@ -51,6 +48,8 @@ def usuarioById(id):
 
 @usuario_bp.route("/usuario", methods = ["POST"])
 def usuarioNovo():
+    if not valida_token(request.headers.get('Authorization')):
+        return {"success": False},401
     try:
         conn = connect_db()
         cur = conn.cursor(pymysql.cursors.DictCursor)
@@ -74,6 +73,8 @@ def usuarioNovo():
 
 @usuario_bp.route("/usuario/<id>/", methods = ["PUT"])
 def usuarioAlterar(id):
+    if not valida_token(request.headers.get('Authorization')):
+        return {"success": False},401
     try:
         conn = connect_db()
         cur = conn.cursor(pymysql.cursors.DictCursor)
@@ -97,6 +98,8 @@ def usuarioAlterar(id):
 
 @usuario_bp.route("/usuario/<id>/", methods = ["DELETE"])
 def usuarioExcluir(id):
+    if not valida_token(request.headers.get('Authorization')):
+        return {"success": False},401
     try:
         conn = connect_db()
         cur = conn.cursor(pymysql.cursors.DictCursor)

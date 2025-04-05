@@ -22,10 +22,10 @@ function salvar(){
     let url;
     let metodo;
     if (idCidadeAtual > 0){
-        url = "http://127.0.0.1:3333/cidade/"+idCidadeAtual;
+        url = "http://127.0.0.1:5000/cidade/"+idCidadeAtual;
         metodo = "PUT";
     } else { 
-        url = "http://127.0.0.1:3333/cidade";
+        url = "http://127.0.0.1:5000/cidade";
         metodo = "POST";
     }
     fetch(url, {method: metodo, body: JSON.stringify(cidade), headers: {"Content-Type" : "application/json"}}).then(function (){ listar(); modalCadastro.hide()})
@@ -35,7 +35,7 @@ function listar(){
     const lista = document.getElementById("lista");
     lista.innerHTML = "<tr><td colspan='5'>Carregando...</td></tr>";
     
-    fetch("http://127.0.0.1:3333/cidade").then(resp => resp.json()).then(dados => mostrar(dados));
+    fetch("http://127.0.0.1:5000/cidade").then(resp => resp.json()).then(dados => mostrar(dados));
 }
 function mostrar(dados){
     const lista = document.getElementById("lista");
@@ -60,7 +60,7 @@ var idCidadeAtual;
 
 function alterar(idCidade){
     idCidadeAtual = idCidade;
-    fetch("http://127.0.0.1:3333/cidade/"+idCidade).then(resp => resp.json()).then(dados =>{
+    fetch("http://127.0.0.1:5000/cidade/"+idCidade).then(resp => resp.json()).then(dados =>{
         document.getElementById("nomeCidade").value = dados.nomeCidade;
         document.getElementById("uf").value = dados.uf;
         document.getElementById("populacao").value = dados.populacao;
@@ -71,6 +71,6 @@ function alterar(idCidade){
 }
 
 function excluir(idCidade){
-    fetch("http://127.0.0.1:3333/cidade/"+idCidade, {method: "DELETE"}).then(function (){listar();});
+    fetch("http://127.0.0.1:5000/cidade/"+idCidade, {method: "DELETE"}).then(function (){listar();});
 
 }

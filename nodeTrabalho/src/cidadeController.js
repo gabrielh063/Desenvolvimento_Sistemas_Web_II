@@ -5,7 +5,7 @@ async function connect() {
     const mysql = require("mysql2/promise");
     const connection = await mysql.createConnection(
         {
-            host: '127.0.0.1', user: 'root', password: 'root', database: 'cidades'
+            host: '127.0.0.1', user: 'root', password: 'root', database: 'mysql'
         }
     );
     global.connection = connection;
@@ -14,16 +14,16 @@ async function connect() {
 
 exports.post = async (req, res, next) => {
     const conn = await connect();
-    const sql = "INSERT INTO cidades " + "(nomeCidade, uf, populacao, anoFundacao) " + "VALUES (?,?,?,?)";
-    const values = [req.body.nomeCidade, req.body.uf, req.body.populacao, req.body.anoFundacao];
+    const sql = "INSERT INTO cidades " + "(nomeCidade, uf, populacao, anoFundacao, area) " + "VALUES (?,?,?,?,?)";
+    const values = [req.body.nomeCidade, req.body.uf, req.body.populacao, req.body.anoFundacao, req.body.area];
     await conn.query(sql, values);
     res.status(201).send("ok");
 }
 exports.put = async (req, res, next) => {
     let id = req.params.id;
     const conn = await connect();
-    const sql = "UPDATE cidades " + "SET nomeCidade = ?, uf = ?, populacao = ?, anoFundacao = ? " + "WHERE idCidade = ?" ;
-    const values = [req.body.nomeCidade, req.body.uf, req.body.populacao, req.body.anoFundacao, id];
+    const sql = "UPDATE cidades " + "SET nomeCidade = ?, uf = ?, populacao = ?, anoFundacao = ?, area = ? " + "WHERE idCidade = ?" ;
+    const values = [req.body.nomeCidade, req.body.uf, req.body.populacao, req.body.anoFundacao, req.body.area, id];
     await conn.query(sql, values);
     res.status(201).send("ok");
 }
