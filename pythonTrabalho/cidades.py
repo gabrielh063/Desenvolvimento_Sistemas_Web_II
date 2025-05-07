@@ -54,8 +54,6 @@ def cidadeNovo():
         cur.execute("INSERT INTO cidades (nomeCidade, uf, populacao, anoFundacao, area) VALUES (%s,%s,%s,%s,%s)",(nomeCidade, uf, populacao, anoFundacao, area))
         conn.commit()
         resp = jsonify({"message": "inserido"})
-        
-        
         resp.status_code = 200
         return resp
     except Exception as e:
