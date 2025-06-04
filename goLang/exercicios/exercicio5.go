@@ -7,7 +7,6 @@ func main(){
 	
 	for i := numero -1; i>=1; i-- {
 		numero = numero * i
-
 	} 
 	fmt.Println("Fatorial de 5 é: ", numero)
 }
