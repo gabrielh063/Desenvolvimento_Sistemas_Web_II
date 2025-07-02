@@ -6,21 +6,25 @@ from flask import flash, request, Blueprint, current_app
 
 cidade_bp = Blueprint("/cidade_bp", __name__)
 
+
 @cidade_bp.route("/cidade")
 def cidade():
+    conn = None
+    cur = None
     try:
         conn = connect_db()
         cur = conn.cursor(pymysql.cursors.DictCursor)
         cur.execute("SELECT * FROM cidades")
         rows = cur.fetchall()
-        resp = jsonify(rows)
-        resp.status_code = 200
-        return resp
+        return jsonify(rows), 200
     except Exception as e:
-        print(e)
+        print("Erro ao buscar cidades:", e)
+        return jsonify({"erro": str(e)}), 500
     finally:
-        cur.close()
-        conn.close()
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
 
 @cidade_bp.route("/cidade/<id>")
 def cidadeById(id):
@@ -39,9 +43,10 @@ def cidadeById(id):
         conn.close()
         
 
-
-@cidade_bp.route("/cidade", methods = ["POST"])
+@cidade_bp.route("/cidade", methods=["POST"])
 def cidadeNovo():
+    conn = None
+    cur = None
     try:
         conn = connect_db()
         cur = conn.cursor(pymysql.cursors.DictCursor)
@@ -51,16 +56,17 @@ def cidadeNovo():
         populacao = cidade["populacao"]
         anoFundacao = cidade["anoFundacao"]
         area = cidade["area"]
-        cur.execute("INSERT INTO cidades (nomeCidade, uf, populacao, anoFundacao, area) VALUES (%s,%s,%s,%s,%s)",(nomeCidade, uf, populacao, anoFundacao, area))
+        cur.execute("INSERT INTO cidades (nomeCidade, uf, populacao, anoFundacao, area) VALUES (%s, %s, %s, %s, %s)", (nomeCidade, uf, populacao, anoFundacao, area))
         conn.commit()
-        resp = jsonify({"message": "inserido"})
-        resp.status_code = 200
-        return resp
+        return jsonify({"message": "inserido"}), 200
     except Exception as e:
-        print(e)
+        print("Erro ao inserir cidade:", e)
+        return jsonify({"erro": str(e)}), 500
     finally:
-        cur.close()
-        conn.close()
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
 
 @cidade_bp.route("/cidade/<id>/", methods = ["PUT"])
 def cidadeAlterar(id):
