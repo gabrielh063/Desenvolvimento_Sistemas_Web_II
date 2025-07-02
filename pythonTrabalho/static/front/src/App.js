@@ -120,7 +120,7 @@ function App() {
                   <td>{cidade.anoFundacao}</td>
                   <td>{cidade.area}</td>
                   <td>
-                    <button className="btn btn-sm btn-warning me-2" onClick={() => openModal(cidade)}>Editar</button>
+                    <button className="btn btn-sm btn-secondary me-2" onClick={() => openModal(cidade)}>Editar</button>
                     <button className="btn btn-sm btn-danger" onClick={() => handleDelete(cidade.idCidade)}>Excluir</button>
                   </td>
                 </tr>
